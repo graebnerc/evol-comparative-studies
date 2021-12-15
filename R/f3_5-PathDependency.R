@@ -3,5 +3,5 @@
 # wls_diff _reg _gap.csv
 # ist das Ausgangsfile
 
-ggsave(plot = TBD, 
-       filename = here("Figure 3.5.pdf"), width = 11, height = 4)
+# ggsave(plot = TBD, 
+#        filename = here("Figure 3.5.pdf"), width = 11, height = 4)

@@ -111,7 +111,6 @@ income_groups <- income_growth_groups %>%
     gdp_dev_w = g_avg_gdp_ppp_pc_w - mean_gdp_ppp_pc_w
   )
 
-label_vec <- c("Core"="Center", "East"="East", "Periphery"="South", "Finance"="Finance")
 income_groups_plt <- ggplot(
   data = income_groups, 
   mapping = aes(x=year, y=gdp_dev, color=c_group, shape=c_group)) +

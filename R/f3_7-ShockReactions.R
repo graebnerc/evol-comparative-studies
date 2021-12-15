@@ -10,6 +10,7 @@ library(scales)
 library(ggthemr)
 ggthemr('greyscale')
 download_data <- FALSE
+source(here("R/country-setup.R"))
 
 start_year <- 2000
 end_year <- 2020

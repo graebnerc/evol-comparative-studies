@@ -122,4 +122,4 @@ eci_plot <- annotate_figure(
     hjust = -0.15))
 
 ggsave(plot = eci_plot, 
-       filename = here("Figure 3.2.pdf"), width = 11, height = 4)
+       filename = here("figures/Figure 3.2.pdf"), width = 11, height = 4)

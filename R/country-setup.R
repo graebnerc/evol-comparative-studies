@@ -1,6 +1,8 @@
 point_size <- 3.5
 shape_values <- c("Core"=0, "East"=4, "Periphery"=8, "Finance"=13)
 shape_values2 <- c("Center"=0, "East"=4, "South"=8, "Finance"=13)
+label_vec <- c("Core"="Center", "East"="East", 
+               "Periphery"="South", "Finance"="Finance")
 
 greys <- grey.colors(n = 4, start = 0.2, end = 0.8)
 color_values <- c(

@@ -11,6 +11,7 @@ library(ggthemr)
 library(haven)
 ggthemr('greyscale')
 download_data <- FALSE
+source(here("R/country-setup.R"))
 
 macro_data_raw <- fread("data/macro_data.csv")
 
