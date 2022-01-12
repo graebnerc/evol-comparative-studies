@@ -310,10 +310,10 @@ make_wls_plot <- function(regression_data, # nimmt long or crisis data
     stop("Wrong change_type given:positive or negative.")
   }
   reg_formula <- set_up_reg_formula(y_var, x_var)
-  
+  # browser()
   reg_model <- lm(reg_formula, 
                   data = reg_dat_used,
-                  weights = late_exp_share_reg)
+                  weights = late_exp_share_mean)
   
   predicted_df <- data.frame(predict(reg_model, 
                                      reg_dat_used, 
@@ -631,4 +631,67 @@ make_wls_plot <- function(base_data, country_name, x_var, y_var, size_var,
     #   )
   
   return(list(plot=exp_plot_re_coef, reg_model=reg_model))
+}
+
+#' Compute technological directedness
+#' 
+#' @param regr_data Tibble containing changes in total export values
+#'  over the periods considered
+#' @param country_code The iso3c country code
+#' @return A tibble with the different betas and the measure of tech 
+#'  directedness
+get_beta <- function(regr_data, country_code){
+  
+  # Setup data to compute total changes:
+  regr_data <- dplyr::filter(regr_data, exporter==country_code)
+  
+  positive_changes <- regr_data %>%
+    dplyr::filter(diff_exp_val_total>0) %>%
+    dplyr::mutate(diff_exp_val_total_log := log(diff_exp_val_total))
+  
+  negative_changes <- regr_data %>%
+    dplyr::filter(diff_exp_val_total<0) %>%
+    dplyr::mutate(
+      diff_exp_val_total := abs(diff_exp_val_total),
+      diff_exp_val_total_log := log(diff_exp_val_total)
+    ) 
+  
+  # Estimate WLS to get beta_plus and beta_minus
+  reg_formula <- as.formula("diff_exp_val_total_log ~ av_pci_w")
+  
+  reg_model_pos <- lm(
+    formula = reg_formula, 
+    data = positive_changes,
+    weights = late_exp_share_mean)
+  beta_plus <- coef(reg_model_pos)[["av_pci_w"]]
+  
+  reg_model_neg <- lm(
+    formula = reg_formula, 
+    data = negative_changes,
+    weights = late_exp_share_mean)
+  beta_minus <- coef(reg_model_neg)[["av_pci_w"]]  
+  
+  # Compute ratios and overall measure of tech directedness
+  pos_changes_total <- regr_data %>%
+    dplyr::filter(diff_exp_val_total>0) %>%
+    dplyr::pull(diff_exp_val_total) %>%
+    sum(.)
+  
+  neg_changes_total <- regr_data %>%
+    dplyr::filter(diff_exp_val_total<0) %>%
+    dplyr::pull(diff_exp_val_total) %>%
+    abs(.) %>%
+    sum(.)
+  
+  changes_total <- pos_changes_total + neg_changes_total
+  share_pos <- pos_changes_total / changes_total
+  share_neg <- neg_changes_total / changes_total
+  
+  tech_direct <- share_pos*beta_plus - share_neg*beta_minus
+  # TODO CHECK THIS
+  
+  tibble("beta_plus"=beta_plus, 
+         "beta_minus"=beta_minus, 
+         "tech_direct"=tech_direct,
+         "country"=country_code)
 }
