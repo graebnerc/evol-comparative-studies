@@ -1,0 +1,12 @@
+Source: IEA Energy Transitions Indicators https://www.iea.org/reports/energy-transitions-indicators
+Documentation: https://iea.blob.core.windows.net/assets/73f40d94-d523-4d1b-9084-7029a33ed8fa/TransitionIndicators_Documentation.pdf
+This data is subject to the IEA's terms and conditions: https://www.iea.org/terms
+
+,Share of renewables in power generation,Share of low carbon sources in power generation,Share of coal in power generation,Share of oil in power generation,Share of gas in power generation,Units
+1990,10,34,44,11,10,%
+1995,12,38,37,10,14,%
+2000,13,39,33,7,20,%
+2005,14,38,31,5,25,%
+2010,20,42,27,3,26,%
+2015,28,50,26,2,19,%
+2018,31,52,21,2,22,%
