@@ -231,7 +231,6 @@ reg_model_rest <- lm(tech_direct~hs_eci,
 beta0_east <- round(coef(reg_model_east)[["(Intercept)"]], 2)
 beta1_east <- round(coef(reg_model_east)[["hs_eci"]], 2)
 r2east <- round(summary(reg_model_east)[["r.squared"]], 2)
-label_east <- paste0("Eastern countries:\n", beta0_east, " + ", beta1_east, "\\\cdot ECI95, R^2=", r2east)
 
 
 beta0_rest <- round(coef(reg_model_rest)[["(Intercept)"]], 2)

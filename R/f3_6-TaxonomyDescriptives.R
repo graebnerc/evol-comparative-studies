@@ -14,7 +14,8 @@ download_data <- FALSE
 source(here("R/country-setup.R"))
 
 macro_data_raw <- fread("data/macro_data.csv")
-
+# Data sources provided in the online appendix of:
+# https://doi.org/10.1007/s00191-019-00639-6
 
 vars_of_interest <- c("Country", "Year",
                       "complexity_HH", "population", "GDP_pc_PPP", 
@@ -77,11 +78,11 @@ make_single_plot <- function(plot_data, plot_variable, plot_title = NA,
 
 
 macro_data <- macro_data_raw %>%
-  dplyr::filter(
-    Country %in% countrycode(unlist(countries_interest), "iso2c", "iso3c"),
-    Year >= 2000 & Year < 2016
-  ) %>%
-  select(one_of(vars_of_interest)) %>%
+  # dplyr::filter(
+  #   Country %in% countrycode(unlist(countries_interest), "iso2c", "iso3c"),
+  #   Year >= 2000 & Year < 2016
+  # ) %>%
+  # select(one_of(vars_of_interest)) %>%
   mutate(
     Country = countrycode(Country, "iso3c", "iso2c"),
     c_group = ifelse(

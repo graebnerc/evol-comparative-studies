@@ -9,7 +9,6 @@ library(WDI)
 library(scales)
 library(ggthemr)
 ggthemr('greyscale')
-download_data <- FALSE
 source(here("R/country-setup.R"))
 
 start_year <- 2000
@@ -99,11 +98,10 @@ unemp_plot <- macro_data %>%
   ) +
   scale_shape_manual(
     name = "Group",
-    values = shape_values,
-    labels = label_vec,
+    values = shape_values
   ) +
   scale_color_manual(
-    name = "Group", values = color_values, labels = label_vec) +
+    name = "Group", values = color_values) +
   theme(legend.text=element_text(size=legend_font_size)) +
   theme(axis.title = element_text(color="black", size=plots_axis_title_size),
         axis.title.x = element_blank(),
@@ -153,11 +151,10 @@ publicdebt_plot <- macro_data %>%
   ) +
   scale_shape_manual(
     name = "Group",
-    values = shape_values,
-    labels = label_vec,
+    values = shape_values
   ) +
   scale_color_manual(
-    name = "Group", values = color_values, labels = label_vec) +
+    name = "Group", values = color_values) +
   theme(legend.text=element_text(size=legend_font_size)) +
   theme(axis.title = element_text(color="black", size=plots_axis_title_size),
         axis.title.x = element_blank(),
@@ -175,7 +172,7 @@ fig_1 <- annotate_figure(
   fig_1,
   bottom = text_grob("Source: AMECO (Spring 2020 forecast), own calculations.",
                      color = "black", hjust = 1, x = 1, 
-                     face = "italic", size = 8))
+                     face = "italic", size = 10))
 
 ggsave(plot = fig_1, 
        filename = here("figures/Figure 3.7.pdf"),

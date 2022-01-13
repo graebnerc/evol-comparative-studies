@@ -10,9 +10,10 @@ library(scales)
 library(ggthemr)
 library(haven)
 ggthemr('greyscale')
-download_data <- FALSE
 
 source(here("R/country-setup.R"))
+
+# Setup data--------------------
 
 eci_data <- read_dta(here("data/rankings.dta")) %>%
   select(all_of(c("year", "hs_eci", "code"))) %>%
@@ -20,12 +21,7 @@ eci_data <- read_dta(here("data/rankings.dta")) %>%
     code = countrycode(code, "iso3c", "iso2c")
   ) 
 
-# Data source: https://doi.org/10.7910/DVN/XTAQMC
-
 income_growth <- fread(here("data/wdi-inc-growth.csv"))
-# Data: see R file
-
-# Cumulative growth
 
 filter_y_min <- 1995
 filter_y_max <- 2020
@@ -47,7 +43,7 @@ income_growth_groups <- income_growth %>%
                 )))))))) %>%
   left_join(eci_data, by = c("year", "ccode"="code"))
 
-# Correlation figure
+# Correlation figure--------------------
 font_color <- c(
   "Core"="white", 
   "East"="black", 
@@ -65,22 +61,33 @@ income_eci <- income_growth_groups %>%
   ) %>%
   ggplot(data = ., aes(x=eci, y=gdp)) +
   geom_point() +
-  geom_smooth(method = "lm", se = FALSE, formula = 'y ~ x', show.legend = FALSE) +
+  geom_smooth(
+    method = "lm", se = FALSE, 
+    formula = 'y ~ x', show.legend = FALSE
+    ) +
   geom_label_repel(
     mapping = aes(label = iso2c, fill=c_group, color=c_group), 
     key_glyph=draw_key_rect, segment.color="black") +
-  scale_fill_grey(aesthetics = c("fill")) +
+  scale_fill_grey(aesthetics = c("fill"), labels = label_vec) +
   scale_color_manual(
-    values = font_color, aesthetics = c("color")) +
+    name = "Group",
+    values = font_color, aesthetics = c("color"),
+    labels = label_vec) +
   guides(color="none") +
-  labs(title = "Complexity and income", x="ECI", y="GDP per capita (PPP)") +
-  scale_y_continuous(labels = number_format(scale = 0.001, suffix = "k")) +
+  labs(
+    title = paste0("Complexity and income (", 
+                   filter_y_min, "-", filter_y_max, ")"), 
+    x="ECI", y="GDP per capita (PPP)"
+    ) +
+  scale_y_continuous(
+    labels = number_format(scale = 0.001, suffix = "k")
+    ) +
   theme(legend.title = element_blank(), 
         plot.title = element_text(size = 15),
         legend.text = element_text(size = 13),
         legend.position = "bottom")
 
-# ECI over time
+# ECI over time------------------------
 eci_dyn_data <- income_growth_groups %>%
   group_by(year, c_group) %>%
   summarise(eci=mean(hs_eci, na.rm=TRUE), .groups = "drop") %>%
@@ -111,15 +118,16 @@ eci_dyn_plot <- ggplot(
         legend.position = "bottom", 
         axis.title.x = element_blank()) 
 
-# Full plot------
+# Full plot----------------------------
 
 eci_plot <- ggarrange(
   income_eci, eci_dyn_plot, ncol = 2, 
   labels = c("a)", "b)"))
 eci_plot <- annotate_figure(
   eci_plot, bottom = text_grob(
-    "Data: WID, CID Atlas of Economic Complexity; own calculation.", 
+    "Data: WDI, CID Atlas of Economic Complexity; own calculation.", 
     hjust = -0.15))
 
 ggsave(plot = eci_plot, 
-       filename = here("figures/Figure 3.2.pdf"), width = 11, height = 4)
+       filename = here("figures/Figure 3.2.pdf"), 
+       width = 11, height = 4)

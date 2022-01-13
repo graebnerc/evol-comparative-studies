@@ -1,5 +1,12 @@
-# Source for country_hsproduct4digit_year.csv:
-# Harvard CID
+#' @data{country_hsproduct4digit_year.csv,
+#'   author = {The Growth Lab at Harvard University},
+#'   publisher = {Harvard Dataverse},
+#'   title = {{International Trade Data (HS, 92)}},
+#'   year = {2019},
+#'   version = {V4},
+#'   doi = {10.7910/DVN/T4CHWJ},
+#'   url = {https://doi.org/10.7910/DVN/T4CHWJ}
+#' }
 
 library(here)
 library(data.table)

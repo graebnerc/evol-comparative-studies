@@ -1,4 +1,4 @@
-#' @data{DVN/T4CHWJ_2019,
+#' @data{country_hsproduct4digit_year.csv,
 #'   author = {The Growth Lab at Harvard University},
 #'   publisher = {Harvard Dataverse},
 #'   title = {{International Trade Data (HS, 92)}},
@@ -21,4 +21,5 @@ raw_data_new <- data.table::fread(
 ) %>%
   dplyr::filter(location_code %in% c("GRC", "DEU"))
 
-data.table::fwrite(raw_data_new, file = here("data/deu_grc_hsproduct4digit.csv"))
+data.table::fwrite(
+  raw_data_new, file = here("data/deu_grc_hsproduct4digit.csv"))

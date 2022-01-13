@@ -7,10 +7,6 @@ library(ggthemr)
 library(ggpubr)
 ggthemr('greyscale')
 
-# make_plot_data
-# set_up_reg_formula
-# make_regression_data
-# make_wls_plot
 source(here("R/directedness-functions.R"))
 
 depend_var <- "diff_exp_val_total_log"
@@ -243,7 +239,7 @@ deu_grc_plot <- ggpubr::annotate_figure(
   p = deu_grc_plot,
   top = text_grob("Direction of technological change", hjust = 0.5, size=15), 
   bottom = text_grob(
-    "Data: CID Atlas of Economic Complexity; author's own calculations.", 
+    "Data: CID Atlas of Economic Complexity; own calculations.", 
     hjust = 0)
 )
 ggsave(plot = deu_grc_plot, filename = here("figures/Figure 3.4.pdf"), 

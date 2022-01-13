@@ -5,30 +5,15 @@ library(ggplot2)
 library(here)
 library(data.table)
 library(ggpubr)
-library(WDI)
 library(scales)
 library(ggthemr)
 ggthemr('greyscale')
-download_data <- FALSE
 
 source(here("R/country-setup.R"))
 
-if (download_data){
-  income_growth <- WDI(
-    indicator = c("growth"="NY.GDP.MKTP.KD.ZG", 
-                  "growth_pc"="NY.GDP.PCAP.KD.ZG", 
-                  "gdp_ppp"="NY.GDP.MKTP.PP.KD",
-                  "gdp_ppp_pc"="NY.GDP.PCAP.PP.KD",
-                  "unemployment"="SL.UEM.TOTL.ZS",
-                  "population"="SP.POP.TOTL"), 
-    country = unlist(countries_interest), start = 1962
-    )
-  fwrite(income_growth, file = here("data/wdi-inc-growth.csv"))
-} else {
-  income_growth <- fread(here("data/wdi-inc-growth.csv"))
-}
+# Setup data---------------------------
 
-# Cumulative growth
+income_growth <- fread(here("data/wdi-inc-growth.csv"))
 
 filter_y_min <- 1995
 filter_y_max <- 2020
@@ -87,6 +72,8 @@ growth_cumg_plt <- income_growth_cumg %>%
   scale_y_continuous(labels = percent_format(scale = 1), 
                      expand = expansion(add = c(0, 10))) +
   theme(panel.grid.major.x = element_blank(), 
+        plot.title = element_text(size = 15),
+        legend.text = element_text(size = 13),
         axis.title.x = element_blank(), 
         axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -124,32 +111,14 @@ income_groups_plt <- ggplot(
   scale_color_manual(
     name = "Group", values = color_values, labels = label_vec) +
   labs(
-    title = paste0("Deviation from average income (", min_year, "-", max_year, ")" ),
+    title = paste0("Deviation from average income (", 
+                   min_year, "-", max_year, ")" ),
     y = "Deviation from average GDP p.c. (PPP)") +
-  theme(legend.title = element_blank(), axis.title.x = element_blank())
+  theme(legend.title = element_blank(),
+        axis.title.x = element_blank(),
+        plot.title = element_text(size = 15),
+        legend.text = element_text(size = 13))
 income_groups_plt
-
-# Unemployment------
-
-unemp_groups <- income_growth_groups %>%
-  group_by(year, c_group) %>%
-  summarise(
-    unemp_groups = mean(unemployment), 
-    unemp_groups_w = weighted.mean(unemployment, population), 
-    .groups = "drop"
-  ) 
-
-unemp_groups_plt <- ggplot(
-  data = unemp_groups, 
-  mapping = aes(x=year, y=unemp_groups, color=c_group, shape=c_group)) +
-  geom_point() + geom_line() +
-  scale_y_continuous(labels = percent_format(scale = 1)) +
-  labs(
-    title = paste0("Unemployment (", min_year, "-", max_year, ")" ),
-    y = "Unemployment rate") +
-  scale_color_grey() +
-  theme(legend.title = element_blank())
-unemp_groups_plt
 
 # Full plot------
 
@@ -157,7 +126,8 @@ ineq_plot <- ggarrange(
   growth_cumg_plt, income_groups_plt, ncol = 2, 
   labels = c("a)", "b)"))
 ineq_plot <- annotate_figure(
-  ineq_plot, bottom = text_grob("Data: World Bank; own calculation.", hjust = -1.1))
+  ineq_plot, 
+  bottom = text_grob("Data: World Bank; own calculation.", hjust = -1.1))
 
 ggsave(plot = ineq_plot, 
        filename = here("figures/Figure 3.1.pdf"), width = 11, height = 4)
