@@ -1,5 +1,4 @@
-# Elements of an evolutionary approach to comparative economic studies: 
-complexity, systemism, and path dependent development
+# Elements of an evolutionary approach to comparative economic studies: complexity, systemism, and path dependent development
 
 [Claudius Gräbner-Radkowitsch](https://claudius-graebner.com/)
 
