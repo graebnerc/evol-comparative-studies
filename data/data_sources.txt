@@ -1,0 +1,28 @@
+Sources for the raw data
+=========================
+
+deu_grc_hsproduct4digit.csv
+------------------------------
+From CID Atlas of Economic Complexity; see file 'create_wdi-income-data.R'
+
+directedness_data.csv
+------------------------------
+From CID Atlas of Economic Complexity; see file 'create_directedness_data.R'
+
+macro_data.csv
+------------------------------
+Data sources provided in the online appendix of:
+https://doi.org/10.1007/s00191-019-00639-6
+
+macro_data_ppp.csv
+------------------------------
+AMECO Spring forcast 2020; the same data used as in:
+https://doi.org/10.1007/s40812-020-00163-w
+
+rankings.dta
+-----------------------------
+https://doi.org/10.7910/DVN/XTAQMC
+
+wdi-inc-growth.csv
+----------------------------------
+From World Bank WDI database; see file 'create_wdi-income-data.R'
