@@ -271,6 +271,13 @@ fig_path_dep <- ggplot(
         plot.title = element_text(hjust = 0.5))
 fig_path_dep
 
-ggsave(plot = fig_path_dep, 
+fig_path_dep_final <- ggpubr::annotate_figure(
+  p = fig_path_dep,
+  bottom = text_grob(
+    "Data: CID Atlas of Economic Complexity; own calculations.", 
+    hjust = 0.1)
+)
+
+ggsave(plot = fig_path_dep_final, 
        filename = here("figures/Figure 3.5.pdf"), 
                        width = 8, height = 4)
