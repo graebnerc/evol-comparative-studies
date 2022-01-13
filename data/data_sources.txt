@@ -9,6 +9,10 @@ directedness_data.csv
 ------------------------------
 From CID Atlas of Economic Complexity; see file 'create_directedness_data.R'
 
+exp_germany.csv and exp_greece.csv
+------------------------------
+Directly from the CID Atlas of Economic Complexity website.
+
 macro_data.csv
 ------------------------------
 Data sources provided in the online appendix of:
