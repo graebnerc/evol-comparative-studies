@@ -5,13 +5,7 @@
 This repository contains the code to replicate all figures and results from
 the above-mentioned publication. It has been published as:
 
-> Gräbner-Radkowitsch, Claudius (2022): Elements of an evolutionary approach to
-comparative economic studies: complexity, systemism, and path dependent 
-development, in: *ICAE Working Papers*, Nb 134. [Online]().
-
-The paper will be published as a chapter in the 
-*Routledge Handbook of Comparative Economic Studies*, 
-edited by Bruno Dallago and Sara Casagrande, in 2022.
+> Gräbner-Radkowitsch, Claudius. 2022. "Elements of an Evolutionary Approach to Comparative Economic Studies: Complexity, Systemism, and Path Dependent Development." pp. 81–102 in *Routledge Handbook of Comparative Economic Systems*, edited by B. Dallago and S. Casagrande. London and New York: Routledge. [Open Access](https://www.taylorfrancis.com/chapters/oa-edit/10.4324/9781003144366-6/elements-evolutionary-approach-comparative-economic-studies-claudius-gr%C3%A4bner-radkowitsch?context=ubx&refId=c5b5bc2c-3c96-4623-a68a-157f183f95aa).
 
 To re-create all figures of the chapter simply run 
 
